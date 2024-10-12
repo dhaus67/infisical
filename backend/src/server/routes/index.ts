@@ -197,6 +197,8 @@ import { userDALFactory } from "@app/services/user/user-dal";
 import { userServiceFactory } from "@app/services/user/user-service";
 import { userAliasDALFactory } from "@app/services/user-alias/user-alias-dal";
 import { userEngagementServiceFactory } from "@app/services/user-engagement/user-engagement-service";
+import { userSecretDALFactory } from "@app/services/user-secret/user-secret-dal";
+import { userSecretServiceFactory } from "@app/services/user-secret/user-secret-service";
 import { webhookDALFactory } from "@app/services/webhook/webhook-dal";
 import { webhookServiceFactory } from "@app/services/webhook/webhook-service";
 import { workflowIntegrationDALFactory } from "@app/services/workflow-integration/workflow-integration-dal";
@@ -288,6 +290,8 @@ export const registerRoutes = async (
   const auditLogStreamDAL = auditLogStreamDALFactory(db);
   const trustedIpDAL = trustedIpDALFactory(db);
   const telemetryDAL = telemetryDALFactory(db);
+
+  const userSecretDAL = userSecretDALFactory(db);
 
   // ee db layer ops
   const permissionDAL = permissionDALFactory(db);
@@ -1210,6 +1214,11 @@ export const registerRoutes = async (
     secretService
   });
 
+  const userSecretService = userSecretServiceFactory({
+    userSecretDAL,
+    kmsService
+  });
+
   await superAdminService.initServerCfg();
   //
   // setup the communication with license key server
@@ -1261,6 +1270,7 @@ export const registerRoutes = async (
     identityAwsAuth: identityAwsAuthService,
     identityAzureAuth: identityAzureAuthService,
     identityOidcAuth: identityOidcAuthService,
+    userSecrets: userSecretService,
     accessApprovalPolicy: accessApprovalPolicyService,
     accessApprovalRequest: accessApprovalRequestService,
     secretApprovalPolicy: secretApprovalPolicyService,

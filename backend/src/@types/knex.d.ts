@@ -347,6 +347,7 @@ import {
   TSecretVersionsV2Update
 } from "@app/db/schemas/secret-versions-v2";
 import { TSecretsV2, TSecretsV2Insert, TSecretsV2Update } from "@app/db/schemas/secrets-v2";
+import { TUserSecrets, TUserSecretsInsert, TUserSecretsUpdate } from "@app/db/schemas/user-secrets";
 
 declare module "knex" {
   namespace Knex {
@@ -615,6 +616,7 @@ declare module "knex/types/tables" {
       TAccessApprovalPoliciesInsert,
       TAccessApprovalPoliciesUpdate
     >;
+    [TableName.UserSecret]: KnexOriginal.CompositeTableType<TUserSecrets, TUserSecretsInsert, TUserSecretsUpdate>;
 
     [TableName.AccessApprovalPolicyApprover]: KnexOriginal.CompositeTableType<
       TAccessApprovalPoliciesApprovers,
