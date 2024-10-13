@@ -37,6 +37,7 @@ import { registerSsoRouter } from "./sso-router";
 import { registerUserActionRouter } from "./user-action-router";
 import { registerUserEngagementRouter } from "./user-engagement-router";
 import { registerUserRouter } from "./user-router";
+import { registerUserSecretRouter } from "./user-secret-router";
 import { registerWebhookRouter } from "./webhook-router";
 import { registerWorkflowIntegrationRouter } from "./workflow-integration-router";
 
@@ -106,4 +107,5 @@ export const registerV1Routes = async (server: FastifyZodProvider) => {
   await server.register(registerUserEngagementRouter, { prefix: "/user-engagement" });
   await server.register(registerDashboardRouter, { prefix: "/dashboard" });
   await server.register(registerCmekRouter, { prefix: "/kms" });
+  await server.register(registerUserSecretRouter, { prefix: "/user-secrets" });
 };
